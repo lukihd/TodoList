@@ -76,4 +76,16 @@ router.delete('/:id', (req, res) => {
     })
 })
 
+router.get('/:id/todos', (req, res) => {
+    return Users.getAllTodosForUser(req.params.id)
+    .then((todos) => {
+        res.format({
+            json: () => {res.json(todos)}
+        })
+    })
+    .catch((err) => {
+        return res.send(err)
+    })
+})
+
 module.exports = router;

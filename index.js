@@ -20,11 +20,17 @@ db.open('todolist.db').then(() => {
     console.log(err)
 })
 
+app.set('views', './views')
+app.set('view engine', 'pug')
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use('/todos', todos)
 app.use('/users', users)
 
+app.get('*', (req, res) => {
+    res.status(404).json({status: '404 Page not found'})
+})
 
 app.listen(8080)

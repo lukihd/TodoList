@@ -21,5 +21,8 @@ module.exports = {
     },
     delete(id) {
         return db.run("delete from users where rowid = " + id)
+    },
+    getAllTodosForUser(id) {
+        return db.all("select * from todos where user_id = '" + id + "'")
     }
 }
