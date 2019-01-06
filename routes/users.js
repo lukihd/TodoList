@@ -11,7 +11,8 @@ router.get('/', (req, res) => {
             html: () => {
                 res.render('index.pug', {
                     key: 'users',
-                    Users: users
+                    Users: users,
+                    title: 'all users'
                 })
             }
         })
@@ -23,13 +24,14 @@ router.get('/', (req, res) => {
 
 router.get('/add', (req, res) => {
     res.render('./users/add.pug', {
-
+        title: 'add user'
     })
 })
 
 router.get('/:id/edit', (req, res) => {
     res.render('./users/edit.pug', {
-        id: req.params.id
+        id: req.params.id,
+        title: 'edit user'
     })
 })
 
@@ -41,7 +43,8 @@ router.get('/:id', (req, res) => {
             
             html: () => {
                 res.render('./users/show.pug', {
-                    Users: user
+                    Users: user,
+                    title: 'user'
                 })
             }
         })

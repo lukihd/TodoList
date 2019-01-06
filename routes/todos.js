@@ -10,7 +10,8 @@ router.get('/', (req, res) => {
             html: () => {
                 res.render('index.pug', {
                     key: 'todos',
-                    Todolist: todos
+                    Todolist: todos,
+                    title: 'all todolist'
                 })
             }
         })
@@ -22,13 +23,14 @@ router.get('/', (req, res) => {
 
 router.get('/add', (req, res) => {
     res.render('./todos/add.pug', {
-
+        title: 'add todolist'
     })
 })
 
 router.get('/:id/edit', (req, res) => {
     res.render('./todos/edit.pug', {
-        id: req.params.id
+        id: req.params.id,
+        title: 'edit todolist'
     })
 })
 
@@ -41,7 +43,8 @@ router.get('/:id', (req, res) => {
 
             html: () => {
                 res.render('./todos/show.pug', {
-                    Todolist: todos
+                    Todolist: todos,
+                    title: 'todolist'
                 })
             }
         })
