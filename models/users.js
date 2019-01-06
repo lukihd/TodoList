@@ -1,4 +1,5 @@
 const db = require('sqlite')
+const passwordHash = require('password-hash')
 const moment = require('moment')
 
 module.exports = {
@@ -11,14 +12,16 @@ module.exports = {
     add(firstname, lastname, username, password, email) {
         updated_at = moment().format("YYYY MM DD")
         created_at = moment().format("YYYY MM DD")
-        return db.run("insert into users (firstname, lastname, username, password, email, created_at, updated_at) values ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + created_at + "', '" + updated_at + "')")
+        passwordHashed = passwordHash.generate(password)
+        return db.run("insert into users (firstname, lastname, username, password, email, created_at, updated_at) values ('" + firstname + "', '" + lastname + "', '" + username + "', '" + passwordHashed + "', '" + email + "', '" + created_at + "', '" + updated_at + "')")
     },
     modify(id, firstname, lastname, username, password, email) {
         updated_at = moment().format("YYYY MM DD")
+        passwordHashed = passwordHash.generate(password)
         return db.run("update users set firstname = '" + firstname 
                                     + "', lastname = '" + lastname 
                                     + "', username = '" + username 
-                                    + "', password = '" + password
+                                    + "', password = '" + passwordHashed
                                     + "', email = '" + email
                                     + "', updated_at = '" + updated_at 
                                     + "' where rowid = " + id )
