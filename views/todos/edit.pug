@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        title add todolist
+        style
+            include ./../style.css
+    body        
+        form(action="/todos/"+id+"/?_method=PUT", method="post")
+            label message
+            input(type="text", name="message")
+            br
+            label completion
+            input(type="text", name="completion")
+            br
+            input#submit(type="submit", value="envoyer")

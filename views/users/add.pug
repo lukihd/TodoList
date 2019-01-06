@@ -1,0 +1,24 @@
+doctype html
+html
+    head
+        title add todolist
+        style
+            include ./../style.css
+    body
+        form(action="/users/?_method=POST", method="post")
+            label firstname
+            input(type="text", name="firstname")
+            br
+            label lastname
+            input(type="text", name="lastname")
+            br
+            label username
+            input(type="text", name="username")
+            br
+            label password
+            input(type="text", name="password")
+            br
+            label email
+            input(type="text", name="email")
+            br
+            input#submit(type="submit", value="envoyer")

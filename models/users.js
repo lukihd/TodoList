@@ -1,4 +1,5 @@
 const db = require('sqlite')
+const moment = require('moment')
 
 module.exports = {
     getAll() {
@@ -7,10 +8,13 @@ module.exports = {
     getOnlyOne(id) {
         return db.get("select * from users where rowid = " + id)
     },
-    add(firstname, lastname, username, password, email, created_at, updated_at) {
+    add(firstname, lastname, username, password, email) {
+        updated_at = moment().format("YYYY MM DD")
+        created_at = moment().format("YYYY MM DD")
         return db.run("insert into users (firstname, lastname, username, password, email, created_at, updated_at) values ('" + firstname + "', '" + lastname + "', '" + username + "', '" + password + "', '" + email + "', '" + created_at + "', '" + updated_at + "')")
     },
-    modify(id, firstname, lastname, username, password, email, updated_at) {
+    modify(id, firstname, lastname, username, password, email) {
+        updated_at = moment().format("YYYY MM DD")
         return db.run("update users set firstname = '" + firstname 
                                     + "', lastname = '" + lastname 
                                     + "', username = '" + username 

@@ -2,7 +2,8 @@ doctype html
 html
     head
         title Show todolist
-        link(rel="stylesheet", href="/views/style.css", type='text/css')
+        style
+            include ./../style.css
     body
         table
             tr
@@ -11,10 +12,15 @@ html
                 th created at
                 th last update
                 th user_id
-            tr
+            
                 - var values = Todolist
-    
-                each object in values
-                    each val, index in object
-                        td= val
                 
+                if (values.length > 1)
+                    each todos in values
+                        tr
+                            each val, index in todos
+                                td= val 
+                else
+                    tr
+                        each todos in values
+                            td= todos

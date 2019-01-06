@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const db = require('sqlite')
 const app = express()
+const methodOverride = require('method-override')
 const todos = require('./routes/todos') 
 const users = require('./routes/users') 
 
@@ -25,6 +26,8 @@ app.set('view engine', 'pug')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use(methodOverride('_method'))
 
 app.use('/todos', todos)
 app.use('/users', users)

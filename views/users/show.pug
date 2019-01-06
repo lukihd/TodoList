@@ -1,0 +1,27 @@
+doctype html
+html
+    head
+        title Show todolist
+        style
+            include ./../style.css
+    body
+        table
+            tr
+                th firstname
+                th lastname
+                th username
+                th password
+                th email
+                th created_at
+                th updated_at
+            
+                - var values = Users
+                if (values.length > 1)
+                    each users in values
+                        tr
+                            each val, index in users
+                                td= val 
+                else
+                    tr
+                        each user in values
+                            td= user

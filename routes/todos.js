@@ -20,11 +20,30 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/add', (req, res) => {
+    res.render('./todos/add.pug', {
+
+    })
+})
+
+router.get('/:id/edit', (req, res) => {
+    res.render('./todos/edit.pug', {
+        id: req.params.id
+    })
+})
+
 router.get('/:id', (req, res) => {
+
     return Todos.getOnlyOne(req.params.id)
     .then((todos) => {
         res.format({
-            json: () => {res.json(todos)}
+            json: () => {res.json(todos)},
+
+            html: () => {
+                res.render('./todos/show.pug', {
+                    Todolist: todos
+                })
+            }
         })
     })
     .catch((err) => {
@@ -35,14 +54,16 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     message = req.body.message
     completion = req.body.completion
-    created_at = req.body.created_at
-    updated_at = req.body.updated_at
     user_id = req.body.user_id
 
-    return Todos.add(message, completion, created_at, updated_at, user_id)
+    return Todos.add(message, completion, user_id)
     .then(() => {
         res.format({
-            json: () => {res.json({message: "success"})}
+            json: () => {res.json({message: "success"})},
+
+            html: () => {
+                res.redirect('/todos')
+            }
         })
     })
     .catch((err) => {
@@ -53,12 +74,15 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
     message = req.body.message
     completion = req.body.completion
-    updated_at = req.body.updated_at
 
-    return Todos.modify(req.params.id ,message, completion, updated_at)
+    return Todos.modify(req.params.id ,message, completion)
     .then(() => {
         res.format({
-            json: () => {res.json({message: "success"})}
+            json: () => {res.json({message: "success"})},
+
+            html: () => {
+                res.redirect('/todos')
+            }
         })
     })
     .catch((err) => {
@@ -70,7 +94,11 @@ router.delete('/:id', (req, res) => {
     return Todos.delete(req.params.id)
     .then(() => {
         res.format({
-            json: () => {res.json({message: "success"})}
+            json: () => {res.json({message: "success"})},
+
+            html: () => {
+                res.redirect('/todos')
+            }
         })
     })
     .catch((err) => {

@@ -4,8 +4,16 @@ const Users = require('./../models/users')
 router.get('/', (req, res) => {
     return Users.getAll()
     .then((users) => {
+        console.log(users)
         res.format({
-            json: () => {res.json(users)}
+            json: () => {res.json(users)},
+
+            html: () => {
+                res.render('index.pug', {
+                    key: 'users',
+                    Users: users
+                })
+            }
         })
     })
     .catch((err) => {
@@ -13,11 +21,29 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/add', (req, res) => {
+    res.render('./users/add.pug', {
+
+    })
+})
+
+router.get('/:id/edit', (req, res) => {
+    res.render('./users/edit.pug', {
+        id: req.params.id
+    })
+})
+
 router.get('/:id', (req, res) => {
     return Users.getOnlyOne(req.params.id)
     .then((user) => {
         res.format({
-            json: () => {res.json(user)}
+            json: () => {res.json(user)},
+            
+            html: () => {
+                res.render('./users/show.pug', {
+                    Users: user
+                })
+            }
         })
     })
     .catch((err) => {
@@ -31,13 +57,15 @@ router.post('/', (req, res) => {
     username = req.body.username
     password = req.body.password
     email = req.body.email
-    created_at = req.body.created_at
-    updated_at = req.body.updated_at
 
-    return Users.add(firstname, lastname, username, password, email, created_at, updated_at)
+    return Users.add(firstname, lastname, username, password, email)
     .then(() => {
         res.format({
-            json: () => {res.json({message: "success"})}
+            json: () => {res.json({message: "success"})},
+
+            html: () => {
+                res.redirect('/users')
+            }
         })
     })
     .catch((err) => {
@@ -51,12 +79,15 @@ router.put('/:id', (req, res) => {
     username = req.body.username
     password = req.body.password
     email = req.body.email
-    updated_at = req.body.updated_at
 
-    return Users.modify(req.params.id, firstname, lastname, username, password, email, updated_at)
+    return Users.modify(req.params.id, firstname, lastname, username, password, email)
     .then(() => {
         res.format({
-            json: () => {res.json({message: "success"})}
+            json: () => {res.json({message: "success"})},
+
+            html: () => {
+                res.redirect('/users')
+            }
         })
     })
     .catch((err) => {
