@@ -5,7 +5,14 @@ router.get('/', (req, res) => {
     return Todos.getAll()
     .then((todos) => {
         res.format({
-            json: () => {res.json(todos)}
+            json: () => {res.json(todos)},
+
+            html: () => {
+                res.render('index.pug', {
+                    key: 'todos',
+                    Todolist: todos
+                })
+            }
         })
     })
     .catch((err) => {

@@ -1,0 +1,20 @@
+doctype html
+html
+    head
+        title Show todolist
+        link(rel="stylesheet", href="/views/style.css", type='text/css')
+    body
+        table
+            tr
+                th message
+                th completion
+                th created at
+                th last update
+                th user_id
+            tr
+                - var values = Todolist
+    
+                each object in values
+                    each val, index in object
+                        td= val
+                
